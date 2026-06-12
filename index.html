@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Nanzz API - Platform API Generasi Berikutnya</title>
+    <meta name="title" content="Kyxzz API - Platform API Generasi Berikutnya">
+    <meta name="description" content="Solusi lengkap untuk integrasi API. Kirim notifikasi, proses data, dan bangun aplikasi tangguh dengan mudah dan andal menggunakan platform kami. Gratis tanpa batas!">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://www.kyzzneko.zone.id/icon.png">
+    <link rel="apple-touch-icon" href="https://www.kyzzneko.zone.id/icon.png">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.kyzzneko.zone.id/">
+    <meta property="og:title" content="Nanzz API - Platform API Generasi Berikutnya">
+    <meta property="og:description" content="Solusi lengkap untuk integrasi API. Kirim notifikasi, proses data, dan bangun aplikasi tangguh dengan mudah dan andal menggunakan platform kami. Gratis tanpa batas!">
+    <meta property="og:image" content="https://www.kyzzneko.zone.id/icon.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Nanzz API">
+    <meta property="og:locale" content="id_ID">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.kyzzneko.zone.id/">
+    <meta property="twitter:title" content="Kyxzz API - Platform API Generasi Berikutnya">
+    <meta property="twitter:description" content="Solusi lengkap untuk integrasi API. Kirim notifikasi, proses data, dan bangun aplikasi tangguh dengan mudah dan andal menggunakan platform kami. Gratis tanpa batas!">
+    <meta property="twitter:image" content="https://www.kyzzneko.zone.id/icon.png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    animation: {
+                        blob: "blob 7s infinite",
+                    },
+                    keyframes: {
+                        blob: {
+                            "0%": { transform: "translate(0px, 0px) scale(1)" },
+                            "33%": { transform: "translate(30px, -50px) scale(1.1)" },
+                            "66%": { transform: "translate(-20px, 20px) scale(0.9)" },
+                            "100%": { transform: "translate(0px, 0px) scale(1)" }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* ============================================================
+           TOKENS - HANYA DARK & LIGHT
+           ============================================================ */
+        [data-theme="dark"] {
+            --bg:        #08081a;
+            --surface:   #0c0c20;
+            --surface2:  #111128;
+            --surface3:  #161638;
+            --border:    rgba(110,60,230,.16);
+            --border2:   rgba(110,60,230,.32);
+            --accent:    #9061f9;
+            --accent2:   #7c3aed;
+            --text:      #eeeeff;
+            --text2:     #c0c0e0;
+            --muted:     #4a4a78;
+            --muted2:    #8080b8;
+            --btn-exec-fg: #ffffff;
+        }
+      [data-theme="light"] {
+            --bg:        #f2f0ff;
+            --surface:   #ffffff;
+            --surface2:  #f6f3ff;
+            --surface3:  #eee9ff;
+            --border:    rgba(100,50,200,.12);
+            --border2:   rgba(100,50,200,.26);
+            --accent:    #7c3aed;
+            --accent2:   #6d28d9;
+            --text:      #1e1040;
+            --text2:     #3d3070;
+            --muted:     #a090c0;
+            --muted2:    #6050a0;
+            --btn-exec-fg: #ffffff;
+        }
+
+        /* ============================================================
+           BASE
+           ============================================================ */
+        :root {
+            --font-mono: 'Share Tech Mono', monospace;
+            --font-head: 'Orbitron', sans-serif;
+            --font-body: 'Rajdhani', sans-serif;
+            --radius: 14px;
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-body);
+            font-size: 15px;
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background .3s, color .3s;
+        }
+        .bg-grid-pattern {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, var(--border) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+            mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+            -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+        }
+
+        /* ============================================================
+           SPLASH SCREEN (TANPA VIDEO)
+           ============================================================ */
+        #splash {
+            position: fixed; inset: 0; z-index: 99999;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            background: var(--bg);
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        #splash.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+        .splash-logo {
+            font-family: var(--font-head); font-size: 2rem; font-weight: 900;
+            color: #9061f9; letter-spacing: 4px;
+            text-shadow: 0 0 20px rgba(124,58,237,0.6);
+            animation: logoGlow 1.5s ease-in-out infinite;
+            margin-bottom: 20px;
+        }
+        .splash-logo em { color: #b48bfc; font-style: normal; }
+        @keyframes logoGlow { 0%,100%{opacity:1;} 50%{opacity:0.7;} }
+
+        .splash-bar-wrap {
+            width: 200px; height: 4px; background: var(--surface2);
+            border-radius: 4px; overflow: hidden;
+        }
+        .splash-bar-fill {
+            height: 100%; width: 0%;
+            border-radius: 4px;
+            background: linear-gradient(90deg, #7c3aed, #a78bfa, #c084fc, #7c3aed);
+            background-size: 300% 100%;
+            animation: fillBar 2s ease-out forwards, shimmer 1.5s linear infinite;
+        }
+        @keyframes fillBar { 0%{width:0%;} 100%{width:100%;} }
+        @keyframes shimmer { 0%{background-position:300% 0;} 100%{background-position:-300% 0;} }
+
+        /* ============================================================
+           THEME SWITCHER (seperti docs)
+           ============================================================ */
+        .theme-btn {
+            position: fixed; top: 16px; right: 16px; z-index: 1000;
+            width: 42px; height: 42px;
+            background: var(--surface); border: 1px solid var(--border2);
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-size: 1.1rem; box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            transition: all 0.2s; color: var(--muted2);
+        }
+        .theme-btn:hover { border-color: var(--accent); color: var(--accent); transform: scale(1.08); }
+        .theme-drawer {
+            position: fixed; top: 66px; right: 16px; z-index: 999;
+            background: var(--surface); border: 1px solid var(--border2);
+            border-radius: 16px; padding: 10px; width: 180px;
+            box-shadow: 0 16px 48px rgba(0,0,0,0.3);
+            transform: scale(0.9) translateY(-10px); opacity: 0; pointer-events: none;
+            transition: all 0.2s cubic-bezier(0.34,1.56,0.64,1);
+            transform-origin: top right;
+        }
+        .theme-drawer.open { transform: scale(1) translateY(0); opacity: 1; pointer-events: all; }
+        .theme-drawer-title {
+            font-family: monospace; font-size: 0.7rem; font-weight: 700; color: var(--muted);
+            letter-spacing: 1.5px; padding: 4px 8px 10px;
+            border-bottom: 1px solid var(--border); margin-bottom: 8px;
+        }
+        .theme-option {
+            display: flex; align-items: center; gap: 10px; padding: 8px 10px;
+            border-radius: 8px; cursor: pointer; transition: background 0.15s;
+            font-family: monospace; font-size: 0.75rem; font-weight: 700; color: var(--muted2);
+            user-select: none;
+        }
+        .theme-option:hover { background: var(--surface2); color: var(--text); }
+        .theme-option.active { background: var(--surface3); color: var(--accent); }
+        .theme-swatch {
+            width: 22px; height: 22px; border-radius: 6px; flex-shrink: 0;
+            border: 2px solid transparent; transition: border-color 0.15s;
+        }
+        .theme-option.active .theme-swatch { border-color: var(--accent); }
+        .theme-check { margin-left: auto; color: var(--accent); font-size: 0.7rem; opacity: 0; transition: opacity 0.2s; }
+        .theme-option.active .theme-check { opacity: 1; }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        details > summary { list-style: none; }
+        details > summary::-webkit-details-marker { display: none; }
+        details[open] summary ~ * { animation: slideDown 0.3s ease-in-out; }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-[var(--bg)] text-[var(--text)] font-sans antialiased relative selection:bg-[var(--accent)] selection:text-[var(--btn-exec-fg)] overflow-x-hidden transition-colors duration-300">
+
+    <!-- Splash Screen tanpa video -->
+    <div id="splash">
+        <div class="splash-logo">KYXZZ<em>API</em></div>
+        <div class="splash-bar-wrap">
+            <div class="splash-bar-fill"></div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="main-content">
+        <button class="theme-btn" id="theme-btn" onclick="toggleThemeDrawer()" title="Ganti Tema">
+            <i class="fas fa-circle-half-stroke"></i>
+        </button>
+          
+        <div class="theme-drawer" id="theme-drawer">
+            <div class="theme-drawer-title">// TEMA</div>
+            <div class="theme-option active" data-theme="dark" onclick="setTheme('dark')">
+                <div class="theme-swatch" style="background:linear-gradient(135deg,#08081a,#7c3aed)"></div>
+                🌙 Dark
+                <i class="fas fa-check theme-check"></i>
+            </div>
+            <div class="theme-option" data-theme="light" onclick="setTheme('light')">
+                <div class="theme-swatch" style="background:linear-gradient(135deg,#f2f0ff,#6d28d9);border:1px solid #c4b5fd"></div>
+                ☀️ Light
+                <i class="fas fa-check theme-check"></i>
+            </div>
+        </div>
+
+        <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+            <div class="absolute inset-0 bg-grid-pattern"></div>
+            <div class="absolute top-0 -left-4 w-72 h-72 bg-[var(--accent)] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob"></div>
+            <div class="absolute top-0 -right-4 w-72 h-72 bg-[var(--accent2)] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob" style="animation-delay: 2s;"></div>
+            <div class="absolute -bottom-8 left-20 w-72 h-72 bg-[var(--accent)] rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob" style="animation-delay: 4s;"></div>
+        </div>
+
+        <header class="sticky top-0 z-50 bg-[var(--surface)] border-b border-[var(--border)] transition-all duration-300" id="navbar">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-16">
+                    <div class="flex items-center gap-2" data-aos="fade-right" data-aos-duration="800">
+                        <div class="w-8 h-8 bg-[var(--accent)] rounded-lg flex items-center justify-center shadow-lg">
+                            <i data-lucide="zap" class="w-5 h-5 text-[var(--btn-exec-fg)]"></i>
+                        </div>
+                        <span class="text-xl font-bold tracking-tight text-[var(--text)]">Nanzz API</span>
+                    </div>
+                    <div class="flex items-center" data-aos="fade-left" data-aos-duration="800">
+                        <button class="p-2 mr-10 rounded-md text-[var(--muted2)] hover:text-[var(--accent)] hover:bg-[var(--surface2)] transition-colors focus:outline-none md:hidden">
+                            <i data-lucide="menu" class="w-6 h-6"></i>
+                        </button>
+                        <nav class="hidden md:flex gap-8 items-center mr-14">
+                            <a href="/docs" class="text-sm font-semibold text-[var(--muted2)] hover:text-[var(--accent)] hover:-translate-y-0.5 transition-all duration-300">Dokumentasi</a>
+                            <a href="#" class="text-sm font-semibold text-[var(--muted2)] hover:text-[var(--accent)] hover:-translate-y-0.5 transition-all duration-300">Harga</a>
+                            <a href="#" class="text-sm font-semibold text-[var(--muted2)] hover:text-[var(--accent)] hover:-translate-y-0.5 transition-all duration-300">Tentang</a>
+                            <a href="#" class="text-sm font-semibold bg-[var(--surface2)] text-[var(--accent)] px-4 py-2 rounded-lg hover:bg-[var(--accent)] hover:text-[var(--btn-exec-fg)] transition-colors duration-300 border border-[var(--border)]">Login</a>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="relative z-10">
+            <!-- Hero Section -->
+            <section class="pt-28 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center flex flex-col items-center">
+                <div data-aos="zoom-in" data-aos-duration="1000" class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--surface2)] border border-[var(--border2)] text-[var(--accent)] text-sm font-semibold mb-8 shadow-sm transition-shadow cursor-default">
+                    <span class="relative flex h-3 w-3">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--accent2)] opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-3 w-3 bg-[var(--accent)]"></span>
+                    </span>
+                    <span>#1 Layanan API Gratis Tanpa Batas</span>
+                </div>
+                
+                <h1 data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000" class="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-[var(--text)] mb-6 leading-tight">
+                    Platform API Generasi <span class="text-transparent bg-clip-text bg-gradient-to-r from-[var(--accent)] to-[var(--accent2)]">Berikutnya</span> <br class="hidden lg:block" /> untuk Web & Mobile
+                </h1>
+                
+                <p data-aos="fade-up" data-aos-delay="400" data-aos-duration="1000" class="text-lg md:text-xl text-[var(--muted2)] max-w-2xl mx-auto mb-10 leading-relaxed">
+                    Solusi lengkap untuk integrasi API. Kirim notifikasi, proses data, dan bangun aplikasi tangguh dengan mudah dan andal menggunakan platform kami.
+                </p>
+                
+                <div data-aos="fade-up" data-aos-delay="600" data-aos-duration="1000" class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center items-center">
+                    <a href="/docs" class="group w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[var(--accent)] text-[var(--btn-exec-fg)] font-bold shadow-lg hover:brightness-110 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2 border border-transparent">
+                        Mulai Sekarang
+                        <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                    <a href="#" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[var(--surface)] text-[var(--text)] font-bold border border-[var(--border)] hover:border-[var(--accent)] hover:bg-[var(--surface2)] hover:text-[var(--accent)] hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2 shadow-sm">
+                        <i data-lucide="activity" class="w-5 h-5"></i>
+                        Status Sistem
+                    </a>
+                </div>
+            </section>
+
+            <!-- Statistik -->
+            <section class="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+                    <div data-aos="fade-up" data-aos-delay="0" class="bg-[var(--surface)] p-6 rounded-2xl border border-[var(--border)] shadow-sm text-center hover:shadow-xl hover:border-[var(--border2)] hover:-translate-y-2 transition-all duration-300 relative overflow-hidden group">
+                        <div class="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 group-hover:scale-110 transition-all duration-500">
+                            <i data-lucide="activity" class="w-32 h-32 text-[var(--accent)]"></i>
+                        </div>
+                        <div class="text-3xl md:text-5xl font-extrabold text-[var(--accent)] mb-2 flex justify-center items-end gap-1">
+                            <span class="counter" data-target="100">0</span>K+
+                        </div>
+                        <div class="text-xs md:text-sm font-bold text-[var(--muted2)] uppercase tracking-wider">Total Request</div>
+                    </div>
+                    <div data-aos="fade-up" data-aos-delay="100" class="bg-[var(--surface)] p-6 rounded-2xl border border-[var(--border)] shadow-sm text-center hover:shadow-xl hover:border-[var(--border2)] hover:-translate-y-2 transition-all duration-300 relative overflow-hidden group">
+                        <div class="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 group-hover:scale-110 transition-all duration-500">
+                            <i data-lucide="server" class="w-32 h-32 text-[var(--accent)]"></i>
+                        </div>
+                        <div class="text-3xl md:text-5xl font-extrabold text-[var(--accent)] mb-2 flex justify-center items-end gap-1">
+                            <span class="counter" data-target="99">0</span>.<span class="text-2xl md:text-3xl mb-1">99%</span>
+                        </div>
+                        <div class="text-xs md:text-sm font-bold text-[var(--muted2)] uppercase tracking-wider">System Uptime</div>
+                    </div>
+                    <div data-aos="fade-up" data-aos-delay="200" class="bg-[var(--surface)] p-6 rounded-2xl border border-[var(--border)] shadow-sm text-center hover:shadow-xl hover:border-[var(--border2)] hover:-translate-y-2 transition-all duration-300 relative overflow-hidden group">
+                        <div class="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 group-hover:scale-110 transition-all duration-500">
+                            <i data-lucide="timer" class="w-32 h-32 text-[var(--accent)]"></i>
+                        </div>
+                        <div class="text-3xl md:text-5xl font-extrabold text-[var(--accent)] mb-2 flex justify-center items-end gap-1">
+                            <span class="counter" data-target="100">0</span><span class="text-xl md:text-2xl mb-1">ms</span>
+                        </div>
+                        <div class="text-xs md:text-sm font-bold text-[var(--muted2)] uppercase tracking-wider">Rata-rata Latensi</div>
+                    </div>
+                    <div data-aos="fade-up" data-aos-delay="300" class="bg-[var(--surface)] p-6 rounded-2xl border border-[var(--border)] shadow-sm text-center hover:shadow-xl hover:border-[var(--border2)] hover:-translate-y-2 transition-all duration-300 relative overflow-hidden group">
+                        <div class="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 group-hover:scale-110 transition-all duration-500">
+                            <i data-lucide="code-2" class="w-32 h-32 text-[var(--accent)]"></i>
+                        </div>
+                        <div class="text-3xl md:text-5xl font-extrabold text-[var(--accent)] mb-2 flex justify-center items-end gap-1">
+                            <span class="counter" data-target="50">0</span>+
+                        </div>
+                        <div class="text-xs md:text-sm font-bold text-[var(--muted2)] uppercase tracking-wider">Endpoint Siap</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Integrasi -->
+            <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+                <div class="bg-[var(--surface)] rounded-[2rem] border border-[var(--border)] shadow-xl overflow-hidden flex flex-col lg:flex-row transform transition-all hover:border-[var(--border2)]">
+                    
+                    <div class="p-8 lg:p-12 lg:w-1/2 flex flex-col justify-center relative" data-aos="fade-right">
+                        <div class="w-12 h-12 bg-[var(--surface2)] rounded-2xl flex items-center justify-center mb-6 text-[var(--accent)] border border-[var(--border)]">
+                            <i data-lucide="terminal-square" class="w-6 h-6"></i>
+                        </div>
+                        <h2 class="text-3xl md:text-4xl font-bold text-[var(--text)] mb-4">Integrasi Super Mulus</h2>
+                        <p class="text-[var(--muted2)] mb-8 leading-relaxed text-lg">
+                            Integrasikan Nanzz API ke dalam aplikasi Anda hanya dengan beberapa baris kode. Kami mendukung berbagai bahasa dan framework untuk pengalaman yang lancar.
+                        </p>
+                        
+                        <div class="mb-8">
+                            <h3 class="text-sm font-bold text-[var(--text)] mb-3 flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-full bg-[var(--accent)] text-[var(--btn-exec-fg)] flex items-center justify-center text-xs">1</span>
+                                Instal paket melalui NPM
+                            </h3>
+                            <div class="flex items-center justify-between bg-[var(--bg)] hover:bg-[var(--surface2)] transition-colors rounded-xl p-4 border border-[var(--border)] group">
+                                <code class="text-sm font-mono text-[var(--accent2)] font-semibold">npm install api-nanzz</code>
+                                <button class="text-[var(--muted)] hover:text-[var(--accent)] hover:scale-110 transition-all p-2 rounded-lg hover:bg-[var(--surface)] border border-transparent hover:border-[var(--border)]" title="Salin" onclick="copyText('npm install api-nanzz', this)">
+                                    <i data-lucide="copy" class="w-5 h-5"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-sm font-bold text-[var(--text)] mb-3 flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-full bg-[var(--accent)] text-[var(--btn-exec-fg)] flex items-center justify-center text-xs">2</span>
+                                Gunakan dalam proyek Anda
+                            </h3>
+                            <p class="text-sm text-[var(--muted2)] mb-4">Inisialisasi dan panggil endpoint dengan mudah menggunakan async/await.</p>
+                            <a href="/docs" class="inline-flex items-center gap-2 text-[var(--accent)] font-bold hover:brightness-110 group bg-[var(--surface2)] px-4 py-2 rounded-lg transition-colors border border-[var(--border)]">
+                                Baca Dokumentasi
+                                <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="bg-[#0a0c10] lg:w-1/2 p-6 lg:p-10 relative overflow-hidden border-l border-[var(--border)]" data-aos="fade-left">
+                        <div class="absolute top-0 right-0 w-64 h-64 bg-[var(--accent)] rounded-full mix-blend-overlay filter blur-3xl opacity-20 animate-pulse"></div>
+                        
+                        <div class="flex gap-2 mb-6 items-center border-b border-[#252b38] pb-4">
+                            <div class="w-3.5 h-3.5 rounded-full bg-red-500/80 cursor-pointer"></div>
+                            <div class="w-3.5 h-3.5 rounded-full bg-yellow-500/80 cursor-pointer"></div>
+                            <div class="w-3.5 h-3.5 rounded-full bg-green-500/80 cursor-pointer"></div>
+                            <div class="ml-4 text-xs font-mono text-[#8892a4] flex items-center gap-2">
+                                <i data-lucide="file-json" class="w-4 h-4 text-yellow-400"></i>
+                                app.js
+                            </div>
+                        </div>
+                        
+                        <pre class="font-mono text-sm leading-relaxed overflow-x-auto no-scrollbar pb-4 text-[#e8edf5]"><code class="language-javascript"><span class="text-purple-400 font-medium">import</span> nanzz <span class="text-purple-400 font-medium">from</span> <span class="text-green-400">'api-nanzz'</span>;
+
+<span class="text-purple-400 font-medium">async function</span> <span class="text-[#0099ff] font-semibold">fetchData</span>() {
+  <span class="text-[#5a6478] italic">/* Mengambil data dari endpoint kategori AI */</span>
+  <span class="text-purple-400 font-medium">const</span> response = <span class="text-purple-400 font-medium">await</span> nanzz.<span class="text-yellow-200">get</span>(<span class="text-green-400">'/category/ai'</span>, {
+    example: <span class="text-green-400">'Testing'</span>,
+    limit: <span class="text-orange-400">5</span>,
+    format: <span class="text-green-400">'json'</span>
+  });
+
+  <span class="text-[#00e5a0]">console</span>.<span class="text-yellow-200">log</span>(response.data);
+}
+
+<span class="text-[#0099ff] font-semibold">fetchData</span>();</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Keunggulan -->
+            <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <span class="text-[var(--accent)] font-bold tracking-wider uppercase text-sm mb-2 block">Keunggulan Platform</span>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-[var(--text)]">Mengapa Memilih Nanzz API?</h2>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div data-aos="fade-up" data-aos-delay="100" class="group bg-[var(--surface)] p-8 rounded-3xl border border-[var(--border)] shadow-sm hover:border-[var(--accent)] hover:-translate-y-2 transition-all duration-300">
+                        <div class="w-14 h-14 bg-[var(--surface2)] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-[var(--accent)] transition-all duration-300 shadow-sm border border-[var(--border)]">
+                            <i data-lucide="book-open" class="w-7 h-7 text-[var(--accent)] group-hover:text-[var(--btn-exec-fg)] transition-colors"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-[var(--text)] mb-3 group-hover:text-[var(--accent)] transition-colors">REST API Lengkap</h3>
+                        <p class="text-[var(--muted2)] leading-relaxed">
+                            Integrasikan dengan mudah ke sistem Anda yang ada menggunakan dokumentasi API kami yang jelas dan respons JSON yang siap pakai.
+                        </p>
+                    </div>
+                    <div data-aos="fade-up" data-aos-delay="200" class="group bg-[var(--surface)] p-8 rounded-3xl border border-[var(--border)] shadow-sm hover:border-[var(--accent)] hover:-translate-y-2 transition-all duration-300">
+                        <div class="w-14 h-14 bg-[var(--surface2)] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-[var(--accent)] transition-all duration-300 shadow-sm border border-[var(--border)]">
+                            <i data-lucide="rocket" class="w-7 h-7 text-[var(--accent)] group-hover:text-[var(--btn-exec-fg)] transition-colors"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-[var(--text)] mb-3 group-hover:text-[var(--accent)] transition-colors">Cepat & Andal</h3>
+                        <p class="text-[var(--muted2)] leading-relaxed">
+                            Infrastruktur tangguh kami memastikan permintaan diproses secara instan dengan tingkat keberhasilan 99.99% dan latensi sangat rendah.
+                        </p>
+                    </div>
+                    <div data-aos="fade-up" data-aos-delay="300" class="group bg-[var(--surface)] p-8 rounded-3xl border border-[var(--border)] shadow-sm hover:border-[var(--accent)] hover:-translate-y-2 transition-all duration-300">
+                        <div class="w-14 h-14 bg-[var(--surface2)] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-[var(--accent)] transition-all duration-300 shadow-sm border border-[var(--border)]">
+                            <i data-lucide="shield-check" class="w-7 h-7 text-[var(--accent)] group-hover:text-[var(--btn-exec-fg)] transition-colors"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-[var(--text)] mb-3 group-hover:text-[var(--accent)] transition-colors">Aman & Terukur</h3>
+                        <p class="text-[var(--muted2)] leading-relaxed">
+                            Dibangun dengan mengutamakan keamanan. Server yang auto-scaling siap menangani lalu lintas Anda yang terus bertambah tanpa hambatan.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Harga -->
+            <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <span class="text-[var(--accent)] font-bold tracking-wider uppercase text-sm mb-2 block">Harga Transparan</span>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-[var(--text)]">Pilih paket yang sesuai</h2>
+                    <p class="text-[var(--muted2)] mt-4 text-lg">Tidak ada biaya tersembunyi. Mulai gratis, tingkatkan saat butuh.</p>
+                </div>
+
+                <div class="max-w-md mx-auto" data-aos="zoom-in-up" data-aos-duration="800">
+                    <div class="bg-[var(--surface)] rounded-[2rem] border-2 border-[var(--accent)] shadow-2xl overflow-hidden relative transform transition-all hover:-translate-y-2">
+                        <div class="absolute top-0 right-0 bg-[var(--accent)] text-[var(--btn-exec-fg)] text-xs font-bold px-4 py-1.5 rounded-bl-xl uppercase tracking-wider">
+                            Direkomendasikan
+                        </div>
+                        
+                        <div class="p-10">
+                            <h3 class="text-2xl font-extrabold text-[var(--text)] mb-2">Gratis Selamanya</h3>
+                            <p class="text-[var(--muted2)] mb-8">Semua yang Anda butuhkan untuk membangun aplikasi luar biasa saat ini.</p>
+                            
+                            <div class="flex items-baseline gap-1 mb-8 pb-8 border-b border-[var(--border)]">
+                                <span class="text-5xl font-extrabold text-[var(--text)]">Rp 0</span>
+                                <span class="text-[var(--muted2)] font-medium">/ bulan</span>
+                            </div>
+                            
+                            <ul class="space-y-5 mb-10">
+                                <li class="flex items-center gap-3">
+                                    <div class="w-6 h-6 rounded-full bg-[var(--surface2)] border border-[var(--border)] flex items-center justify-center shrink-0">
+                                        <i data-lucide="check" class="w-4 h-4 text-[var(--accent)]"></i>
+                                    </div>
+                                    <span class="text-[var(--text)] font-medium">Permintaan Tanpa Batas</span>
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <div class="w-6 h-6 rounded-full bg-[var(--surface2)] border border-[var(--border)] flex items-center justify-center shrink-0">
+                                        <i data-lucide="check" class="w-4 h-4 text-[var(--accent)]"></i>
+                                    </div>
+                                    <span class="text-[var(--text)] font-medium">Akses ke Semua Endpoint</span>
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <div class="w-6 h-6 rounded-full bg-[var(--surface2)] border border-[var(--border)] flex items-center justify-center shrink-0">
+                                        <i data-lucide="check" class="w-4 h-4 text-[var(--accent)]"></i>
+                                    </div>
+                                    <span class="text-[var(--text)] font-medium">Tidak Perlu API Key</span>
+                                </li>
+                                <li class="flex items-center gap-3">
+                                    <div class="w-6 h-6 rounded-full bg-[var(--surface2)] border border-[var(--border)] flex items-center justify-center shrink-0">
+                                        <i data-lucide="check" class="w-4 h-4 text-[var(--accent)]"></i>
+                                    </div>
+                                    <span class="text-[var(--text)] font-medium">Dukungan via Discord</span>
+                                </li>
+                            </ul>
+                            
+                            <a href="/docs" class="block w-full py-4 px-4 bg-[var(--accent)] hover:brightness-110 text-[var(--btn-exec-fg)] text-center font-bold rounded-xl transition-all active:scale-95 border border-transparent">
+                                Mulai Membangun Sekarang
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FAQ -->
+            <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto">
+                <div class="text-center mb-12" data-aos="fade-up">
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-[var(--text)]">Pertanyaan Umum</h2>
+                    <p class="text-[var(--muted2)] mt-4 text-lg">Temukan jawaban untuk pertanyaan mengenai layanan kami.</p>
+                </div>
+
+                <div class="space-y-4" data-aos="fade-up" data-aos-delay="200">
+                    <details class="group bg-[var(--surface)] rounded-2xl border border-[var(--border)] overflow-hidden hover:border-[var(--accent)] transition-colors shadow-sm">
+                        <summary class="flex cursor-pointer items-center justify-between gap-1.5 p-6 text-[var(--text)] font-bold hover:bg-[var(--surface2)] transition-colors">
+                            <span class="text-lg">Apa itu Nanzz API?</span>
+                            <div class="w-8 h-8 rounded-full bg-[var(--surface2)] border border-[var(--border)] flex items-center justify-center group-open:bg-[var(--accent)] transition-colors">
+                                <i data-lucide="chevron-down" class="w-5 h-5 text-[var(--muted2)] group-open:text-[var(--btn-exec-fg)] transition duration-300 group-open:-rotate-180"></i>
+                            </div>
+                        </summary>
+                        <div class="px-6 pb-6 text-[var(--muted2)] leading-relaxed border-t border-[var(--border)] pt-4">
+                            Nanzz API adalah platform yang menyediakan berbagai macam antarmuka pemrograman aplikasi (API) siap pakai untuk membantu developer membangun aplikasi web, seluler, dan bot otomatisasi dengan lebih cepat tanpa harus membangun backend dari nol.
+                        </div>
+                    </details>
+
+                    <details class="group bg-[var(--surface)] rounded-2xl border border-[var(--border)] overflow-hidden hover:border-[var(--accent)] transition-colors shadow-sm">
+                        <summary class="flex cursor-pointer items-center justify-between gap-1.5 p-6 text-[var(--text)] font-bold hover:bg-[var(--surface2)] transition-colors">
+                            <span class="text-lg">Apakah layanan ini benar-benar gratis?</span>
+                            <div class="w-8 h-8 rounded-full bg-[var(--surface2)] border border-[var(--border)] flex items-center justify-center group-open:bg-[var(--accent)] transition-colors">
+                                <i data-lucide="chevron-down" class="w-5 h-5 text-[var(--muted2)] group-open:text-[var(--btn-exec-fg)] transition duration-300 group-open:-rotate-180"></i>
+                            </div>
+                        </summary>
+                        <div class="px-6 pb-6 text-[var(--muted2)] leading-relaxed border-t border-[var(--border)] pt-4">
+                            Ya, paket "Gratis Selamanya" kami menawarkan permintaan tanpa batas ke semua endpoint publik kami tanpa memerlukan kartu kredit atau komitmen berlangganan. Kami percaya dalam mendukung komunitas developer.
+                        </div>
+                    </details>
+
+                    <details class="group bg-[var(--surface)] rounded-2xl border border-[var(--border)] overflow-hidden hover:border-[var(--accent)] transition-colors shadow-sm">
+                        <summary class="flex cursor-pointer items-center justify-between gap-1.5 p-6 text-[var(--text)] font-bold hover:bg-[var(--surface2)] transition-colors">
+                            <span class="text-lg">Bahasa pemrograman apa yang didukung?</span>
+                            <div class="w-8 h-8 rounded-full bg-[var(--surface2)] border border-[var(--border)] flex items-center justify-center group-open:bg-[var(--accent)] transition-colors">
+                                <i data-lucide="chevron-down" class="w-5 h-5 text-[var(--muted2)] group-open:text-[var(--btn-exec-fg)] transition duration-300 group-open:-rotate-180"></i>
+                            </div>
+                        </summary>
+                        <div class="px-6 pb-6 text-[var(--muted2)] leading-relaxed border-t border-[var(--border)] pt-4">
+                            Karena kami menyediakan REST API standar yang mengembalikan respon JSON, Anda dapat menggunakan layanan kami dengan hampir semua bahasa pemrograman, termasuk JavaScript (Node.js, React), Python, PHP, Java, Go, Ruby, dan banyak lagi.
+                        </div>
+                    </details>
+                </div>
+            </section>
+        </main>
+
+        <footer class="bg-[var(--surface)] border-t border-[var(--border)] mt-12 relative z-10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div class="md:col-span-2">
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="w-8 h-8 bg-[var(--accent)] rounded-lg flex items-center justify-center shadow-md">
+                                <i data-lucide="zap" class="w-4 h-4 text-[var(--btn-exec-fg)]"></i>
+                            </div>
+                            <span class="text-2xl font-extrabold tracking-tight text-[var(--text)]">Nanzz API</span>
+                        </div>
+                        <p class="text-[var(--muted2)] leading-relaxed pr-4 max-w-sm">
+                            Antarmuka interaktif ini memungkinkan Anda menjelajahi dan menguji koleksi endpoint API kami yang komprehensif secara real-time. Dibangun oleh developer, untuk developer.
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-bold text-[var(--text)] mb-4 uppercase tracking-wider text-sm">Tautan Cepat</h4>
+                        <ul class="space-y-3">
+                            <li><a href="/docs" class="text-[var(--muted2)] hover:text-[var(--accent)] hover:translate-x-1 inline-block transition-transform font-medium">Dokumentasi</a></li>
+                            <li><a href="#" class="text-[var(--muted2)] hover:text-[var(--accent)] hover:translate-x-1 inline-block transition-transform font-medium">Semua Kategori</a></li>
+                            <li><a href="#" class="text-[var(--muted2)] hover:text-[var(--accent)] hover:translate-x-1 inline-block transition-transform font-medium">Status Sistem</a></li>
+                            <li><a href="#" class="text-[var(--muted2)] hover:text-[var(--accent)] hover:translate-x-1 inline-block transition-transform font-medium">Kebijakan Privasi</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="font-bold text-[var(--text)] mb-4 uppercase tracking-wider text-sm">Sosial</h4>
+                        <div class="flex gap-4">
+                            <a href="#" class="w-10 h-10 rounded-full bg-[var(--surface2)] border border-[var(--border)] flex items-center justify-center text-[var(--muted2)] hover:bg-[var(--accent)] hover:border-[var(--accent)] hover:text-[var(--btn-exec-fg)] hover:-translate-y-1 transition-all" title="WhatsApp">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-[var(--surface2)] border border-[var(--border)] flex items-center justify-center text-[var(--muted2)] hover:bg-[var(--accent)] hover:border-[var(--accent)] hover:text-[var(--btn-exec-fg)] hover:-translate-y-1 transition-all" title="Instagram">
+                                <i data-lucide="instagram" class="w-4 h-4"></i>
+                            </a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-[var(--surface2)] border border-[var(--border)] flex items-center justify-center text-[var(--muted2)] hover:bg-[var(--text)] hover:border-[var(--text)] hover:text-[var(--bg)] hover:-translate-y-1 transition-all" title="Github">
+                                <i data-lucide="github" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-12 pt-8 border-t border-[var(--border)] flex flex-col md:flex-row justify-between items-center gap-4">
+                    <p class="text-sm font-medium text-[var(--muted2)]">
+                        &copy; 2026 Nanzz API. Hak cipta dilindungi.
+                    </p>
+                    <div class="text-sm font-medium text-[var(--muted2)] flex items-center gap-1">
+                        Dibuat dengan <i data-lucide="heart" class="w-4 h-4 text-red-500 fill-red-500 animate-pulse"></i> di Indonesia
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        /* Theme Script (default 'dark') */
+        const THEMES = ['dark','light'];
+        function setTheme(name) {
+            if (!THEMES.includes(name)) name = 'dark';
+            document.documentElement.setAttribute('data-theme', name);
+            localStorage.setItem('kyxzzapi_theme', name);
+            document.querySelectorAll('.theme-option').forEach(el => {
+                el.classList.toggle('active', el.dataset.theme === name);
+            });
+            document.getElementById('theme-drawer').classList.remove('open');
+        }
+        function toggleThemeDrawer() {
+            document.getElementById('theme-drawer').classList.toggle('open');
+        }
+        document.addEventListener('click', e => {
+            const drawer = document.getElementById('theme-drawer');
+            const btn    = document.getElementById('theme-btn');
+            if (!drawer.contains(e.target) && !btn.contains(e.target)) {
+                drawer.classList.remove('open');
+            }
+        });
+        (function() {
+            const saved = localStorage.getItem('kyxzz_theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', saved);
+            document.addEventListener('DOMContentLoaded', () => {
+                document.querySelectorAll('.theme-option').forEach(el => {
+                    el.classList.toggle('active', el.dataset.theme === saved);
+                });
+            });
+        })();
+
+        /* Splash Screen */
+        window.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                document.getElementById('splash').classList.add('hidden');
+            }, 2000);
+        });
+
+        /* Init */
+        lucide.createIcons();
+        AOS.init({ once: true, offset: 50, easing: 'ease-out-cubic' });
+
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) navbar.classList.add('shadow-md');
+            else navbar.classList.remove('shadow-md');
+        });
+
+        const counters = document.querySelectorAll('.counter');
+        const speed = 200;
+        const animateCounters = () => {
+            counters.forEach(counter => {
+                const updateCount = () => {
+                    const target = +counter.getAttribute('data-target');
+                    const count = +counter.innerText;
+                    const inc = target / speed;
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count + inc);
+                        setTimeout(updateCount, 15);
+                    } else counter.innerText = target;
+                };
+                updateCount();
+            });
+        };
+        const observerOptions = { threshold: 0.5 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        const statsSection = document.querySelector('.grid.lg\\:grid-cols-4');
+        if(statsSection) observer.observe(statsSection);
+
+        function copyText(text, btnElement) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "absolute";
+            textArea.style.left = "-999999px";
+            document.body.prepend(textArea);
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                const icon = btnElement.querySelector('i');
+                const originalIcon = icon.getAttribute('data-lucide');
+                btnElement.style.color = 'var(--accent)';
+                btnElement.style.borderColor = 'var(--accent)';
+                icon.setAttribute('data-lucide', 'check');
+                lucide.createIcons();
+                setTimeout(() => {
+                    btnElement.style.color = '';
+                    btnElement.style.borderColor = '';
+                    icon.setAttribute('data-lucide', originalIcon);
+                    lucide.createIcons();
+                }, 2000);
+            } catch (error) {
+                console.error('Gagal menyalin teks', error);
+            } finally {
+                textArea.remove();
+            }
+        }
+    </script>
+</body>
+</html>
