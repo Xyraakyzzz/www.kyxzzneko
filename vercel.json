@@ -7,6 +7,9 @@
     {
       "source": "/health",
       "destination": "https://kyzznekoo.zone.id/health"
-    }
+    },
+    {
+      "source": "/docs",
+      "destination": "docs.html"
   ]
 }
