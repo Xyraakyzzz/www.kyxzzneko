@@ -3,6 +3,15 @@ const VIDEO_LIGHT = "https://kappa.lol/uJWEb9";
 const vidLoader = document.getElementById('vid-loader');
 const video = document.getElementById('hero-vid');
 
+(async()=> {
+  const { about } = await (await fetch('https://kyzznekoo.zone.id/base/config.json')).json();
+
+  document.getElementById('service').href = about.github;
+  document.getElementById('report').href = about.github;
+  document.getElementById('ch').href = about.channel;
+  document.getElementById('gc').href = about.gc;
+})();
+
 function updateVideo(n) {
     if (!video) return;
     const src = n === 'light' ? VIDEO_LIGHT : VIDEO_DARK;
