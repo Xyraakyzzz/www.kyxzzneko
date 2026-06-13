@@ -2,6 +2,7 @@
   "rewrites": [
     {
       "source": "/icon.png",
-      "destination": "https://lynx-xyraa-my-id.vercel.app/api/ch?url=https://whatsapp.com/channel/0029VbCWwrR3gvWdm7Cizm3N"
+      "destination": "https://lynx-xyraa-my-id.vercel.app/api/ch?url=https%3A%2F%2Fwhatsapp.com%2Fchannel%2F0029VbCWwrR3gvWdm7Cizm3N"
     }
+  ]
 }
