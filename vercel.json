@@ -1,0 +1,7 @@
+{
+  "rewrites": [
+    {
+      "source": "/icon.png",
+      "destination": "https://lynx-xyraa-my-id.vercel.app/api/ch?url=https://whatsapp.com/channel/0029VbCWwrR3gvWdm7Cizm3N"
+    }
+}
