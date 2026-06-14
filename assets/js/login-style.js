@@ -246,9 +246,9 @@ const provider = new GoogleAuthProvider();
             }
         }
 
-        const btn = document.getElementById('btnGoogle');
+        const btn_a = document.getElementById('btnGoogle');
 
-         if (btn && !btn.dataset.bound) {
+         if (btn_a && !btn.dataset.bound) {
           btn.dataset.bound = "true";
 
          btn.addEventListener('click', async () => {
