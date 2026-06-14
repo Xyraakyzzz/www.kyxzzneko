@@ -1,4 +1,4 @@
-import { auth } from "./assets/db/firebase.js";
+import { auth } from "https://www.kyzzneko.zone.id/assets/db/firebase.js";
 import { GoogleAuthProvider, signInWithPopup } 
 from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
