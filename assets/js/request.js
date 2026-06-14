@@ -212,7 +212,7 @@ window.toggleRequestModal = (show) => {
     }
 };
 
-function showValidatorModal(rule, ApiName = "") {
+function showValidatorModal(rule, apiName = "") {
     const modal = document.getElementById('validatorModal');
     const msgEl = document.getElementById('validatorMsg');
     const closeBtn = document.getElementById('validatorClose');
@@ -221,8 +221,8 @@ function showValidatorModal(rule, ApiName = "") {
     if (!modal || !msgEl) return;
 
     let message = rule.popupText;
-    if (ApiName) {
-        message = message.replace("{ApiName}", ApiName);
+    if (apiName) {
+        message = message.replace("{apiName}", apiName);
     }
 
     msgEl.innerText = message;
@@ -307,7 +307,7 @@ function isDuplicate(newName) {
 
     return existingRequestsCache.some(req => {
         if (!req.ApiName) return false;
-        const cleanOld = req.ApiName.toLowerCase().trim().replace(/[^a-z0-9]/g, "");
+        const cleanOld = req.apiName.toLowerCase().trim().replace(/[^a-z0-9]/g, "");
         const isNameMatch = cleanOld === cleanNew || cleanOld.includes(cleanNew) || cleanNew.includes(cleanOld);
 
         if (isNameMatch) {
@@ -322,7 +322,7 @@ window.filterRequests = () => {
     const searchTerm = document.getElementById('reqSearch').value.toLowerCase();
     const filterStatus = document.getElementById('reqFilter').value;
     const filteredData = existingRequestsCache.filter(req => {
-        const matchesName = req.ApiName.toLowerCase().includes(searchTerm);
+        const matchesName = req.apiName.toLowerCase().includes(searchTerm);
         let matchesStatus = true;
         if (filterStatus !== 'all') {
             const status = req.status || 'pending';
@@ -385,7 +385,7 @@ function renderRequestList(data) {
         return `
         <div class="req-item animate-in">
             <div class="flex justify-between items-start mb-2">
-                <div class="req-item-title flex-1 mr-2">${req.ApiName}</div>
+                <div class="req-item-title flex-1 mr-2">${req.apiName}</div>
                 <span class="req-status ${statusClass}">${statusText}</span>
             </div>
             
@@ -414,13 +414,13 @@ document.getElementById('submitReq').onclick = () => {
     const user = auth.currentUser;
     if (!user) { window.showToast("Harap login dahulu!"); return; }
 
-    const ApiName = document.getElementById('reqName').value.trim();
+    const apiName = document.getElementById('reqName').value.trim();
     const ApiLink = document.getElementById('reqLink').value.trim();
     const ApiFeat = document.getElementById('reqFeature').value.trim();
 
-    if (!ApiName || !ApiFeat) { window.showToast("Nama & Fitur wajib diisi!"); return; }
+    if (!apiName || !ApiFeat) { window.showToast("Nama & Fitur wajib diisi!"); return; }
 
-    const lowerName = ApiName.toLowerCase();
+    const lowerName = apiName.toLowerCase();
     const matchedRule = requestRules.find(rule =>
         rule.keywords.some(kw => lowerName.includes(kw.toLowerCase()))
     );
@@ -439,7 +439,7 @@ document.getElementById('submitReq').onclick = () => {
     }
 
     const forbiddenPattern = /<script\b[^>]*>([\s\S]*?)<\/script>|javascript:|on\w+=/i;
-    if (forbiddenPattern.test(ApiName) || forbiddenPattern.test(ApiLink) || forbiddenPattern.test(ApiFeat)) {
+    if (forbiddenPattern.test(apiName) || forbiddenPattern.test(ApiLink) || forbiddenPattern.test(ApiFeat)) {
         alert("Input mengandung karakter terlarang atau script berbahaya! Request dibatalkan.");
         return;
     }
@@ -461,7 +461,7 @@ document.getElementById('submitReq').onclick = () => {
     push(ref(db, 'request'), {
         uid: user.uid,
         username: user.displayName || "User",
-        apiName: ApiName,
+        apiName: apiName,
         scarpeLink: ApiLink || "-",
         description: ApiFeat,
         timestamp: serverTimestamp(),
