@@ -7,6 +7,7 @@
     <script type="module" src="/assets/db/index.js"></script>
     <link rel="icon" type="image/png" href="https://www.kyzzneko.zone.id/icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <script type="module" src="/assets/js/request.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="/assets/css/docs/style.css">
@@ -22,6 +23,10 @@
         <button class="nbtn" id="tb" onclick="toggleTD()" title="Tema">
           <i class="fas fa-circle-half-stroke"></i>
        </button>
+       <button class="nbtn relative" id="btnRequestCenter" onclick="window.toggleRequestModal(true)">
+           <i class="fas fa-plus"></i>
+         <span class="absolute -top-1 -right-1 bg-red-500 text-[10px] px-1 rounded-full">!</span>
+        </button>
       <button class="nbtn" id="btnLogout" title="Logout">
         <i class="fas fa-right-from-bracket"></i>
        </button>
