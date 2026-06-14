@@ -166,30 +166,38 @@ body.modal-open {
         display: flex; flex-direction: column; overflow: hidden;
     }
 
-/* ===== FIX MODAL CENTER + NO CUT HEADER ===== */
+/* ===== FIX MODAL: NAIK KE ATAS + CENTER PROPER ===== */
 
 #requestModal {
-    align-items: flex-start !important;
+    display: flex !important;
+    align-items: flex-start !important; /* bikin naik ke atas */
     justify-content: center !important;
-    padding-top: 60px !important;
+
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+
     overflow-y: auto !important;
 }
 
+/* container modal */
 #requestModal > div {
-    margin: 0 auto !important;
+    margin-top: 0 !important;
     transform: none !important;
+
+    max-height: 90vh !important;
+    overflow: hidden !important; /* biar header tidak kepotong */
 }
 
-/* pastikan header tidak ke-clip */
-#requestModal > div {
-    max-height: 90vh;
-    overflow: hidden;
-}
-
-/* area isi yang boleh scroll */
+/* area isi scroll */
 .req-view-container {
+    max-height: calc(90vh - 120px) !important;
     overflow-y: auto !important;
-    max-height: calc(90vh - 120px);
+}
+
+/* fix close button kepotong (anti clip header) */
+#requestModal .flex.justify-between {
+    position: relative;
+    z-index: 10;
 }
 `;
 document.head.appendChild(styleRequest);
