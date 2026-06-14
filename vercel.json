@@ -9,6 +9,10 @@
       "destination": "https://kyzznekoo.zone.id/health"
     },
     {
+      "source": "/Login",
+      "destination": "Login.html"
+    },
+    {
       "source": "/docs",
       "destination": "docs.html"
     }
